@@ -17,13 +17,9 @@ def incoming():
 def menu():
     digit = request.form.get("Digits", "1")
     response = VoiceResponse()
-    streams = {
-        "1": "https://ice2.somafm.com/deepspaceone-128-mp3",
-        "2": "https://ice2.somafm.com/techno-128-mp3",
-        "3": "https://ice2.somafm.com/groovesalad-128-mp3",
-    }
-    url = streams.get(digit, streams["1"])
-    response.play(url)
+    response.say("You pressed " + digit + ". Music coming soon. Thank you.")
     return Response(str(response), mimetype="text/xml")
 
-if __name__
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
