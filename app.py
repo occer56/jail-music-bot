@@ -1,13 +1,13 @@
-app = Flask(__name__)
+from flask import Flask, request, Response
+from twilio.twiml.voice_response import VoiceResponse, Gather
 
-HOUSE_STREAMS = [
-"https://www.youtube.com/watch?v=vHIob3bT0pk", # placeholder
-]
+import os
+
+app = Flask(__name__)
 
 @app.route("/incoming", methods=["POST"])
 def incoming():
 response = VoiceResponse()
-# Auto-press 5 to accept jail call
 response.play(digits="5")
 gather = Gather(num_digits=1, action="/menu", timeout=10)
 gather.say("Welcome. Press 1 for deep house. Press 2 for tech house. Press 3 for classic house.")
@@ -30,4 +30,3 @@ return Response(str(response), mimetype="text/xml")
 if __name__ == "__main__":
 port = int(os.environ.get("PORT", 5000))
 app.run(host="0.0.0.0", port=port)
-Tq
